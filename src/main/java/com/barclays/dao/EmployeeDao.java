@@ -23,7 +23,6 @@ import com.sun.xml.internal.ws.message.EmptyMessageImpl;
 
 public class EmployeeDao {
 
-	@Autowired
 	private DataSource dataSource;
 
 	private List<Employee> employees;
@@ -34,7 +33,6 @@ public class EmployeeDao {
 		this.employees = new ArrayList<Employee> ();
 
 		ApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-		System.out.println(appContext);
 
 		this.dataSource = (DataSource) appContext.getBean("dataSource");
 
@@ -57,7 +55,6 @@ public class EmployeeDao {
 		try {
 
 			Connection dbConnection = dataSource.getConnection();
-			System.out.println("Connection successful: " + (dataSource != null));
 			
 			String selectQuery = "SELECT e.id, e.email, e.employee_id FROM email e";
 			
@@ -81,6 +78,10 @@ public class EmployeeDao {
 				}
 				
 			}
+			
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
 
 		}
 		catch (SQLException e) {
@@ -93,7 +94,6 @@ public class EmployeeDao {
 		try {
 
 			Connection dbConnection = dataSource.getConnection();
-			System.out.println("Connection successful: " + (dataSource != null));
 			
 			String selectQuery = "SELECT a.id, a.city, a.employee_id FROM address a";
 			
@@ -116,6 +116,10 @@ public class EmployeeDao {
 				}
 				
 			}
+			
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
 
 		}
 		catch (SQLException e) {
@@ -128,7 +132,6 @@ public class EmployeeDao {
 		try {
 
 			Connection dbConnection = dataSource.getConnection();
-			System.out.println("Connection successful: " + (dataSource != null));
 			
 			String selectQuery = "SELECT e.id, e.name, e.brid, e.manager_id FROM employee e";
 			
@@ -153,6 +156,10 @@ public class EmployeeDao {
 					
 				}
 				
+			}
+			
+			if (dbConnection != null) {
+				dbConnection.close();
 			}
 
 		}

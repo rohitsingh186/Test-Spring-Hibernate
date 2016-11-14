@@ -12,8 +12,6 @@
 	<body>
 		<h2>Employee</h2>
 	
-		${ message }
-	
 		<table>
 	
 			<tr>
@@ -31,7 +29,12 @@
 					<td>${employee.brid}</td>
 					<td>${employee.manager.name}</td>
 					<td>${employee.address.city}</td>
-					<td>${employee.emails}</td>
+					<td>
+						<c:forEach items="${employee.emails}" var="emailOb">
+							${ emailOb.email }<br>
+						</c:forEach>
+						
+					</td>
 				</tr>
 			</c:forEach>
 		</table>

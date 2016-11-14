@@ -18,7 +18,6 @@ public class EmployeeController {
 	public ModelAndView showEmployeePage(ModelMap map) {
 
 		map.addAttribute("employeeList", DaoFactory.getEmployeeDao().getEmployees());
-		map.addAttribute("message", "In controller");
 		
 		return new ModelAndView("employee.jsp");
 	}
