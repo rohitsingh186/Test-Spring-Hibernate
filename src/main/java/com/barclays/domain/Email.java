@@ -1,6 +1,6 @@
 package com.barclays.domain;
 
-public class Email implements Comparable{
+public class Email implements Comparable {
 
 	private int id;
 	private String email;
@@ -36,12 +36,10 @@ public class Email implements Comparable{
 
 	@Override
 	public int compareTo(Object o) {
-		if(this.email.equals(((Email)o).email))
+		if (this.email.equals(((Email) o).email))
 			return 0;
-		else 
+		else
 			return 1;
 	}
-
-	
 
 }

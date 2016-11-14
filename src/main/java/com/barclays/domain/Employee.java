@@ -1,6 +1,7 @@
 package com.barclays.domain;
 
 import java.util.Set;
+import java.util.TreeSet;
 
 public class Employee {
 
@@ -9,8 +10,10 @@ public class Employee {
 	private String brid;
 	private Address address;
 	private Set<Email> emails;
+	private Employee manager;
 
 	public Employee() {
+		this.emails = new TreeSet<Email>();
 	}
 
 	public int getId() {
@@ -51,6 +54,18 @@ public class Employee {
 
 	public void setEmails(Set<Email> emails) {
 		this.emails = emails;
+	}
+	
+	public void addEmail(Email email){
+		this.emails.add(email);
+	}
+	
+	public Employee getManager() {
+		return manager;
+	}
+
+	public void setManager(Employee manager) {
+		this.manager = manager;
 	}
 
 }

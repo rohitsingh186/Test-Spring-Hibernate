@@ -9,23 +9,9 @@
 		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
 
-
-
-	<mvc:annotation-driven />
-
-	<context:component-scan base-package="com.barclays.controller" />
-
-	<context:annotation-config />
-
-	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-
-		<property name="prefix">
-			<value>/resources/views/</value>
-		</property>
-
-		<!-- <property name="suffix"> <value>.jsp</value> </property> -->
-
-	</bean>
-
-</beans>
+	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/MyDataSource"
+		expected-type="javax.sql.DataSource" />
+	
+	
+</beans>	
+	
