@@ -26,11 +26,10 @@ public class EmployeeDao {
 	private DataSource dataSource;
 
 	private List<Employee> employees;
-	
 
 	public EmployeeDao() {
-		
-		this.employees = new ArrayList<Employee> ();
+
+		this.employees = new ArrayList<Employee>();
 
 		ApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 
@@ -40,130 +39,136 @@ public class EmployeeDao {
 
 	public List<Employee> getEmployees() {
 
-		employees = new ArrayList<Employee> ();
-		
+		employees = new ArrayList<Employee>();
+
 		generateEmployees();
 		generateAddress();
 		generateEmails();
 
 		return employees;
-		
+
 	}
-	
-	private void generateEmails(){
-		
+
+	private void generateEmails() {
+
 		try {
 
 			Connection dbConnection = dataSource.getConnection();
-			
+
 			String selectQuery = "SELECT e.id, e.email, e.employee_id FROM email e";
-			
-			try (Statement selectSt = dbConnection.createStatement()){
-				
+
+			try (Statement selectSt = dbConnection.createStatement()) {
+
 				ResultSet result = selectSt.executeQuery(selectQuery);
-				
+
 				while (result.next()) {
-					
+
 					int id = result.getInt("id");
 					String email = result.getString("email");
 					int employeeId = result.getInt("employee_id");
-					
+
 					Email emailOb = new Email();
 					emailOb.setId(id);
 					emailOb.setEmail(email);
 					emailOb.setEmployee(getEmployee(employeeId));
-					
+
 					getEmployee(employeeId).addEmail(emailOb);
-					
+
 				}
-				
+
 			}
-			
+
 			if (dbConnection != null) {
 				dbConnection.close();
 			}
 
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	private void generateAddress() {
 		try {
 
 			Connection dbConnection = dataSource.getConnection();
-			
+
 			String selectQuery = "SELECT a.id, a.city, a.employee_id FROM address a";
-			
-			try (Statement selectSt = dbConnection.createStatement()){
-				
+
+			try (Statement selectSt = dbConnection.createStatement()) {
+
 				ResultSet result = selectSt.executeQuery(selectQuery);
-				
+
 				while (result.next()) {
-					
+
 					int id = result.getInt("id");
 					String city = result.getString("city");
 					int employeeId = result.getInt("employee_id");
-					
+
 					Address address = new Address();
 					address.setCity(city);
 					address.setEmployee(getEmployee(employeeId));
-					
+
 					getEmployee(employeeId).setAddress(address);
-					
+
 				}
-				
+
 			}
-			
+
 			if (dbConnection != null) {
 				dbConnection.close();
 			}
 
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	private void generateEmployees() {
 		try {
 
 			Connection dbConnection = dataSource.getConnection();
-			
-			String selectQuery = "SELECT e.id, e.name, e.brid, e.manager_id FROM employee e";
-			
-			try (Statement selectSt = dbConnection.createStatement()){
-				
+
+			try (Statement selectSt = dbConnection.createStatement()) {
+
+				String selectQuery = "SELECT e.id, e.name, e.brid, e.manager_id FROM employee e";
 				ResultSet result = selectSt.executeQuery(selectQuery);
 				
 				while (result.next()) {
+
+					int id = result.getInt("id");
 					
+					Employee emp = new Employee();
+					emp.setId(id);
+					
+					employees.add(emp);
+
+				}
+				
+				
+				result.beforeFirst();
+				while (result.next()) {
+
 					int id = result.getInt("id");
 					String name = result.getString("name");
 					String brid = result.getString("brid");
 					int managerId = result.getInt("manager_id");
-					
-					Employee emp = new Employee();
+
+					Employee emp = getEmployee(id);
 					emp.setId(id);
 					emp.setName(name);
 					emp.setBrid(brid);
 					emp.setManager(getEmployee(managerId));
-					
-					employees.add(emp);
-					
+
 				}
-				
+
 			}
-			
+
 			if (dbConnection != null) {
 				dbConnection.close();
 			}
 
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
@@ -172,17 +177,17 @@ public class EmployeeDao {
 	 * public void setEmployees(List<Employee> employees) { this.employees =
 	 * employees; }
 	 */
-	
+
 	public Employee getEmployee(int id) {
-		
-		for (Employee e: employees) {
+
+		for (Employee e : employees) {
 			if (e.getId() == id) {
 				return e;
 			}
 		}
-		
+
 		return null;
-		
+
 	}
 
 	public void addEmployee(Employee employee) {
