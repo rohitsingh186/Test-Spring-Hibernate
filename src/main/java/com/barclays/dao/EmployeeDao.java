@@ -17,9 +17,7 @@ public class EmployeeDao {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		
-		Criteria criteria = session.createCriteria(Employee.class);
-		
-		List<Employee> employeeList = criteria.list();
+		List<Employee> employeeList = session.createQuery("FROM Employee").list();
 		
 		System.out.println("Number of Employees: " + employeeList.size());
 		
