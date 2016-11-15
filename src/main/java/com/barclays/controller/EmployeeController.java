@@ -17,7 +17,7 @@ public class EmployeeController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView showEmployeePage(ModelMap map) {
 
-		map.addAttribute("employeeList", DaoFactory.getEmployeeDao().getEmployees());
+		map.addAttribute("employeeList", DaoFactory.getEmployeeDao().getAllEmployees());
 		
 		return new ModelAndView("employee.jsp");
 	}
