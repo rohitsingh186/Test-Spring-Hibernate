@@ -10,14 +10,16 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Repository;
+
+import com.barclays.domain.Email;
 import com.barclays.domain.Employee;
 
 @Repository
-public class EmployeeDao {
+public class EmailDao {
 
     private SessionFactory sessionFactory;
  
-	public List<Employee> getAllEmployees() {
+	public List<Email> getAllEmails() {
 
 		ApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 		
@@ -27,14 +29,14 @@ public class EmployeeDao {
 		Session session = this.sessionFactory.openSession();
 		session.beginTransaction();
 
-		List<Employee> employeeList = session.createQuery("FROM Employee").list();
+		List<Email> emailList = session.createQuery("FROM Email").list();
 
-		System.out.println("Number of Employees: " + employeeList.size());
+		System.out.println("Number of Emails: " + emailList.size());
 
 		session.getTransaction().commit();
 		session.close();
 
-		return employeeList;
+		return emailList;
 
 	}
 
